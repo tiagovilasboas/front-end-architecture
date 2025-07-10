@@ -1,7 +1,7 @@
 ---
 // Componente para o Wizard de Decisão Arquitetural
 import { getCollection } from 'astro:content';
-import { Users, Puzzle } from 'lucide-astro';
+import DynamicIcon from '../DynamicIcon.astro';
 import PatternCard from './PatternCard.astro';
 
 const allPatterns = await getCollection('patterns');
@@ -12,7 +12,7 @@ const allPatterns = await getCollection('patterns');
     <!-- Filtro 1: Tamanho do Time -->
     <div class="filter-group">
       <h3 class="filter-title">
-        <Users size={20} />
+        <DynamicIcon name="users" size={20} />
         Qual o tamanho do seu time?
       </h3>
       <div class="card-options">
@@ -34,7 +34,7 @@ const allPatterns = await getCollection('patterns');
     <!-- Filtro 2: Complexidade do Produto -->
     <div class="filter-group">
       <h3 class="filter-title">
-        <Puzzle size={20} />
+        <DynamicIcon name="puzzle" size={20} />
         Qual a complexidade do produto?
       </h3>
       <div class="card-options">

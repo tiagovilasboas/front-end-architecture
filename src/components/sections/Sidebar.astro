@@ -19,8 +19,8 @@ const patternsByCategory = allPatterns.reduce((acc, pattern) => {
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
-<aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full border-r bg-secondary transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-auto">
-  <div class="p-6">
+<aside id="sidebar" class="sidebar">
+  <div class="p-6 h-full flex flex-col">
     <div class="search-wrapper">
       <Search class="search-icon" size={18} />
       <input type="text" id="sidebar-search" placeholder="Buscar padrões..." />
@@ -117,15 +117,16 @@ const currentPath = new URL(Astro.request.url).pathname;
 
 <style>
   .sidebar {
-    grid-area: sidebar;
     background-color: var(--secondary);
     border-right: 1px solid var(--border);
-    padding: 1.5rem;
     overflow-y: auto;
   }
 
-  #sidebar.is-open {
-    transform: translateX(0);
+  .nav-links {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-right: -1.5rem; /* Compensa o padding do pai para a scrollbar */
+    padding-right: 1.5rem;
   }
 
   .search-wrapper {
