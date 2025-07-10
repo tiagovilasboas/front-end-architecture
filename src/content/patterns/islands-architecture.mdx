@@ -1,14 +1,11 @@
 ---
-title: 'Arquitetura de Ilhas (Islands Architecture)'
-description: 'Explore a Arquitetura de Ilhas, um padrão que visa reduzir o JavaScript enviado ao cliente, entregando componentes interativos como "ilhas" em um mar de HTML estático.'
+title: 'Islands Architecture'
+description: 'Descubra a Arquitetura de Ilhas, um padrão que favorece a entrega de HTML estático com "ilhas" de interatividade, melhorando drasticamente a performance e o Time to Interactive (TTI).'
 icon: 'component'
-layout: '../../layouts/ContentLayout.astro'
 category: 'Arquiteturas de Aplicação'
 ---
 
-A Arquitetura de Ilhas é, para mim, uma das ideias mais inteligentes que surgiram no front-end nos últimos anos. Ela ataca um problema que nós mesmos criamos: a obsessão por SPAs que transformou a web em um festival de JavaScript pesado e spinners de loading.
-
-A ideia é tão simples que chega a ser brilhante: por padrão, envie zero JavaScript. Seu site é HTML puro, rápido e acessível. Então, para cada pedacinho de interatividade que você *realmente* precisa (um carrossel de imagens, um botão de "comprar", uma busca), você define essa área como uma "ilha". Só essa ilha vai carregar seu próprio script, hidratando-se para se tornar interativa, sem afetar o resto da página.
+Se a SPA é um extremo (tudo no cliente) e o MPA/SSR tradicional é outro (tudo no servidor), a Arquitetura de Ilhas é o meio-termo genial que o mundo front-end precisava. A ideia, popularizada pelo Astro, é incrivelmente simples e poderosa: por padrão, envie HTML puro, sem JavaScript. E então, para cada componente que *precisa* de interatividade, crie uma "ilha" isolada de JavaScript.
 
 Frameworks como o Astro são os campeões dessa abordagem. Eles te dão o poder de componentes do React, Svelte, etc., mas com a performance de um site estático como padrão. É o melhor dos dois mundos, e a prova de que nem toda aplicação precisa ser uma SPA complexa.
 

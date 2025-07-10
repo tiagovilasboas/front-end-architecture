@@ -1,12 +1,11 @@
 ---
-title: 'Máquinas de Estado (State Machines)'
-description: 'Descubra como usar Máquinas de Estado para gerenciar estados complexos da UI de forma previsível e robusta, eliminando bugs comuns.'
+title: 'State Machines (Máquinas de Estado)'
+description: 'Aprenda a usar Máquinas de Estado Finitas para gerenciar estados complexos na UI, eliminando bugs de estados impossíveis e tornando a lógica de componentes mais previsível e robusta.'
 icon: 'workflow'
-layout: '../../layouts/ContentLayout.astro'
-category: 'Padrões de UI'
+category: 'Metodologias de UI'
 ---
 
-`isLoading`, `isError`, `isSuccess`, `isEmpty`, `isSubmitting`... Se você já se viu com um monte de variáveis booleanas para controlar o que aparece na tela, você sabe a confusão que isso pode virar. E se `isLoading` e `isError` forem `true` ao mesmo tempo? O que acontece? É a receita para bugs bizarros.
+Se você já se viu escrevendo um componente React com uma teia de `useState` e `useEffect` para controlar o que é exibido na tela (`isLoading`, `isError`, `isSuccess`, `isSubmitting`...), você sabe a dor que as máquinas de estado resolvem.
 
 Máquinas de Estado são a resposta para esse caos. Em vez de um monte de `boolean`s espalhados, você define de forma explícita todos os estados possíveis que sua UI pode ter (`loading`, `success`, `error`, etc.) e as transições permitidas entre eles. Um componente *não pode* estar em dois estados ao mesmo tempo.
 
