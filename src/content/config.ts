@@ -5,13 +5,21 @@ const patternsCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     icon: z.string(),
-    layout: z.string().optional(),
+    layout: z.string(),
     category: z.string(),
     featured: z.boolean().optional(),
-    scores: z.record(z.string(), z.number()).optional(), // Adicionando scores que usamos no wizard
+    scores: z.record(z.string(), z.number()).optional(),
+  }),
+});
+
+const guidesCollection = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
   }),
 });
 
 export const collections = {
   patterns: patternsCollection,
+  guides: guidesCollection,
 }; 

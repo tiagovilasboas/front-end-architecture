@@ -54,9 +54,14 @@ const propsForSeo = { ...rest, ...frontmatter };
         <ThemeToggle />
       </header>
       <Sidebar />
-      <main class="main-content">
-        <slot />
-      </main>
+      <div class="flex-1">
+        <div class="grid lg:grid-cols-[280px_1fr] h-full">
+          <Sidebar />
+          <main class="main-content">
+            <slot />
+          </main>
+        </div>
+      </div>
     </div>
     <script>
       document.getElementById('menu-toggle').addEventListener('click', () => {
@@ -135,9 +140,9 @@ const propsForSeo = { ...rest, ...frontmatter };
   }
 
   .main-content {
-    grid-area: main;
-    padding: 2rem;
-    overflow-y: auto;
+    width: 86%;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
   }
 
   .footer {
