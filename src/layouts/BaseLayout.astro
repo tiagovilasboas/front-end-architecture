@@ -1,5 +1,15 @@
 ---
 import { Icon } from 'lucide-astro';
+import 'prism-themes/themes/prism-tomorrow.css';
+
+const { frontmatter } = Astro.props;
+const siteUrl = Astro.site;
+const pageUrl = Astro.url;
+
+const title = frontmatter.title ? `${frontmatter.title} | FN-ARCH` : 'Front-End Architecture';
+const description = frontmatter.description || 'A curated collection of battle-tested patterns and practices for building modern, maintainable, and scalable front-end applications.';
+const canonicalUrl = new URL(pageUrl.pathname, siteUrl);
+const ogImageUrl = new URL('/og-image.png', siteUrl); // Placeholder image
 ---
 
 <html lang="en">
@@ -8,7 +18,26 @@ import { Icon } from 'lucide-astro';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Architecture</title>
+		
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<!-- Canonical URL -->
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- OpenGraph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="FN-ARCH" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
 
 		<script is:inline>
 			const theme = (() => {
