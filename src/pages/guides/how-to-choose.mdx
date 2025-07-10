@@ -1,61 +1,63 @@
 ---
-layout: ../../components/layouts/BaseLayout.astro
 title: 'Como Escolher sua Arquitetura Front-End'
 description: 'Um guia prático para tomar decisões arquiteturais com base nas necessidades do seu time, produto e negócio.'
 ---
+E aí, dev? Beleza?
 
-import { Compass } from 'lucide-astro';
-import DecisionWizard from '../../components/interactive/DecisionWizard.astro';
+Meu nome é Tiago, e eu estou no front-end há uns 18 anos. Já vi muita coisa ir e vir. jQuery virando "código legado", a ascensão do Angular.js, a explosão do React, e agora essa sopa de letrinhas de frameworks, padrões e "a forma certa" de se fazer as coisas.
 
-<div class="hero-section">
-  <h1 class="title"><Compass size={32} stroke-width="1" />Como Escolher sua Arquitetura Front-End</h1>
-  <p class="subtitle">Não existe "a melhor arquitetura". Existe a arquitetura certa para o seu contexto. Use o guia interativo abaixo ou leia sobre os fatores de decisão para fazer as perguntas certas.</p>
-</div>
+Se você chegou até aqui, provavelmente está com aquela dor de cabeça clássica: **"Qual arquitetura eu uso para esse projeto?"**.
 
-<DecisionWizard />
+A internet está cheia de artigos que dizem "use a arquitetura X porque é a melhor". Mas "melhor" pra quem? Pro Google? Pra um time de 300 pessoas na gringa? E pra você? Pro seu time de 3 pessoas com um prazo apertado?
 
-## O Desafio da Escolha
+Criei este guia por causa disso. Isso não é um manual de regras. Pense nisso como uma conversa, um guia de bolso com a opinião de quem já quebrou a cabeça com tudo isso. Meu objetivo não é te dar uma resposta definitiva, mas sim te ajudar a fazer as **perguntas certas**.
 
-A arquitetura de front-end define como sua aplicação cresce, escala e se mantém resiliente. Uma escolha errada pode levar a um código frágil, times frustrados e lentidão na entrega de valor. A escolha certa, por outro lado, cria um ambiente produtivo e um produto robusto.
+Vamos analisar os padrões de arquitetura mais populares, sem papas na língua. Vou te mostrar não só o *o quê*, mas o *porquê* — e, mais importante, o *quando* e o *quando não*.
 
-A chave é entender que toda arquitetura é um conjunto de **trade-offs**. O que funciona para um time gigante construindo um editor de vídeo pode ser um exagero para uma startup criando um blog.
-
-A seguir, apresentamos os principais **fatores de decisão (drivers)** que devem guiar sua escolha.
+Então, bora parar de rodar em círculos e mergulhar nas opções que temos na mesa.
 
 ---
 
-### 1. Tamanho e Maturidade do Time
+### O Desafio da Escolha
 
-A estrutura do seu time é um dos maiores influenciadores da arquitetura.
+Arquitetura de front-end não é sobre escolher o framework da moda. É sobre fazer apostas. Uma aposta errada e você termina com um código que ninguém quer mexer, times frustrados e um produto lento. A aposta certa cria uma base sólida para crescer.
 
-*   **Solo Dev / Time Pequeno (< 5 pessoas):** A prioridade máxima é a **velocidade e simplicidade**. Arquiteturas monolíticas simples (como um SPA clássico ou um projeto Astro como este) são ideais. A complexidade de padrões como Micro-Frontends pode ser um "tiro no pé".
-*   **Múltiplos Times / Squads (> 10 pessoas):** A **autonomia e o baixo acoplamento** se tornam críticos. Arquiteturas que criam limites claros entre as partes do sistema (como Micro-Frontends ou um Monorepo com bibliotecas bem definidas) permitem que os times trabalhem em paralelo sem pisar no pé uns dos outros.
+A real é que não existe "melhor arquitetura". Existe um conjunto de **trade-offs**. O que a gente precisa aprender é a fazer as perguntas certas pro nosso contexto.
 
-### 2. Complexidade e Escopo do Produto
+Vamos quebrar os fatores que realmente importam.
 
-Qual é o "tamanho" do problema que você está resolvendo?
+### 1. Seu Time: O fator humano
 
-*   **Baixa Complexidade (Sites de conteúdo, Landing Pages):** O foco é SEO e performance de carregamento. Arquiteturas **SSG (Static Site Generation)** como a do Astro são imbatíveis.
-*   **Média Complexidade (Dashboards, Ferramentas Internas):** A interatividade do usuário é alta, mas o domínio não é gigante. Um **SPA (Single Page Application)** bem estruturado com uma clara separação de camadas (UI, lógica de negócio, acesso a dados) costuma ser a melhor pedida.
-*   **Alta Complexidade (Sistemas de Design, Editores Gráficos, Super Apps):** O problema aqui é gerenciar a complexidade em si. Padrões como **Arquitetura Limpa** (para isolar o domínio) e **Máquinas de Estado** (para fluxos complexos) se tornam essenciais.
+A dinâmica do seu time é o fator nº 1.
 
-### 3. Requisitos de Performance e SEO
+*   **Lobo Solitário ou Time Pequeno (< 5):** A meta é **velocidade**. Um bom e velho monolito (SPA, um site com Astro) é seu melhor amigo. Não se meta com Micro-Frontends. É como usar um canhão pra matar uma formiga.
+*   **Vários Times/Squads (> 10):** A meta é **autonomia**. Agora sim a conversa sobre limites claros fica séria. Monorepos bem definidos ou Micro-Frontends começam a fazer sentido para que um time não pare o outro.
 
-Como seus usuários chegam até você e qual a primeira impressão que eles têm?
+### 2. Seu Produto: O tamanho do problema
 
-*   **SEO Crítico (E-commerce, Blogs, Portais de Notícia):** A página precisa ser renderizada no servidor (SSR) ou gerada estaticamente (SSG) para que os crawlers do Google a entendam perfeitamente. **Arquitetura de Ilhas (Astro)** e frameworks como Next.js/Nuxt são as melhores opções.
-*   **Performance de Interação Crítica (Aplicações ricas, Dashboards):** O carregamento inicial pode ser um pouco mais lento se a experiência após o login for extremamente rápida. Um **SPA** que carrega os dados de forma inteligente é uma boa escolha.
+O que você está construindo, de verdade?
 
-### 4. Velocidade de Entrega (Time-to-Market)
+*   **Simples e Direto (Landing Pages, Blogs):** O jogo é **SEO e performance**. Gerar tudo estaticamente (SSG) com Astro, Next.js ou similar é o caminho.
+*   **Interatividade Média (Dashboards, Ferramentas):** O usuário vai passar tempo aqui. A experiência precisa ser fluida. Um **SPA** bem feito, que carrega os dados de forma esperta, é o padrão.
+*   **Complexidade no Talos (Figma, Super Apps):** O desafio é **gerenciar a complexidade**. Aqui, conceitos como **Clean Architecture** (pra isolar a lógica de negócio) e **Máquinas de Estado** (pra domar fluxos cabeludos) não são luxo, são necessidade.
 
-O quão rápido você precisa se mover?
+### 3. SEO e Performance: A porta de entrada
 
-*   **MVP / Startup em estágio inicial:** Abrace a simplicidade. Use o que seu time já conhece. Não adote um padrão complexo como Micro-Frontends apenas porque "parece bom no papel". A meta é validar hipóteses o mais rápido possível.
-*   **Produto Maduro / Enterprise:** O custo de uma decisão errada é alto. Investir tempo em uma arquitetura mais robusta e escalável (como a **Arquitetura Limpa**) se paga no longo prazo, pois facilita a manutenção e a adição de novas features.
+Como o mundo te encontra?
 
-### 5. Escalabilidade e Manutenibilidade Futura
+*   **O Google é seu melhor amigo (E-commerce, Portais):** O conteúdo precisa estar no HTML que chega no navegador. Renderização no servidor (**SSR**) ou estática (**SSG**) não é negociável. Frameworks como Next.js, Nuxt e Astro foram feitos pra isso.
+*   **Experiência rica pós-login:** Se o usuário já está "dentro de casa", um **SPA** pode brilhar, mesmo que o primeiro carregamento demore um tiquinho a mais.
 
-Onde você quer estar daqui a 2 anos?
+### 4. Time-to-Market: A velocidade do negócio
 
-*   **Crescimento Esperado:** Se você sabe que a aplicação vai crescer muito em features e desenvolvedores, comece a pensar em **modularidade** desde o início. Use uma estrutura de pastas orientada a features/domínio e separe componentes reutilizáveis em uma pasta `shared`.
-*   **Manutenibilidade:** Uma boa arquitetura torna o código fácil de entender, testar e modificar. Padrões como **Desenvolvimento Orientado a Componentes (CDD)** e ter uma boa suíte de testes automatizados são seus melhores amigos aqui. 
+Pra quando precisa estar pronto?
+
+*   **Startup/MVP:** Use o que seu time sabe. **Abrace o simples**. O objetivo é aprender rápido, não construir um sistema para durar 10 anos (ainda).
+*   **Produto Maduro:** O custo do erro é alto. Investir em uma base mais robusta (**Clean Architecture**, por exemplo) se paga com o tempo, facilitando a vida na hora de dar manutenção ou adicionar features.
+
+### 5. O Futuro: Escalabilidade e Manutenção
+
+Onde esse projeto vai estar em 2 anos?
+
+*   **Vai crescer?** Pense em **modularidade** desde o começo. Uma estrutura de pastas que separa as features e um diretório `shared` para coisas reutilizáveis já ajuda muito.
+*   **Vai durar?** Código fácil de entender e testar é o segredo. **Desenvolvimento Orientado a Componentes (CDD)** e testes automatizados são seus melhores seguros de vida. 
