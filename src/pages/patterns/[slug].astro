@@ -13,10 +13,10 @@ export async function getStaticPaths() {
 const { pattern } = Astro.props;
 const { Content } = await pattern.render();
 ---
-<BaseLayout title={pattern.data.name} description={pattern.data.description}>
+<BaseLayout title={pattern.data.title} description={pattern.data.description}>
   <article>
     <header class="hero-section">
-      <h1 class="title">{pattern.data.name}</h1>
+      <h1 class="title">{pattern.data.title}</h1>
       <p class="subtitle">{pattern.data.description}</p>
     </header>
     <div class="prose">
