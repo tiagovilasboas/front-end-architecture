@@ -1,0 +1,107 @@
+---
+title: 'Jamstack'
+description: 'Conheça o Jamstack (JavaScript, APIs e Markup), uma abordagem para construir sites rápidos e seguros, pré-renderizando o máximo possível e servindo via CDN.'
+icon: 'cloud'
+layout: '../../layouts/ContentLayout.astro'
+category: 'Arquiteturas de Aplicação'
+---
+
+Ah, o Jamstack. Lembro da empolgação quando essa ideia começou a ganhar tração. A promessa era voltar à simplicidade e velocidade da web estática, mas com os superpoderes do JavaScript e das APIs modernas. E, na maioria das vezes, a promessa foi cumprida.
+
+Para mim, Jamstack é sinônimo de pragmatismo. Por que ter um servidor de aplicação complexo e caro rodando 24/7 só pra servir um blog ou um site institucional que muda pouco? Com Jamstack, você pré-renderiza tudo em HTML, joga numa CDN e... pronto. É mais rápido para o usuário, mais seguro contra ataques e, geralmente, muito mais barato de hospedar.
+
+O "pulo do gato" é entender que "estático" não significa "sem interatividade". O "J" e o "A" (JavaScript e APIs) estão aí para isso. Você pode ter um site estático que consome uma API de produtos, um sistema de comentários via serviço de terceiros e autenticação com um provedor de identidade. É a união da robustez do estático com a dinamicidade das APIs.
+
+Vamos entender como essa mágica funciona.
+
+### O que é?
+
+---
+import JamstackDiagram from '../../components/diagrams/flows/JamstackDiagram.astro';
+
+**Jamstack** não é uma tecnologia específica, mas uma filosofia arquitetural projetada para tornar a web mais rápida, segura e fácil de escalar. O "JAM" no nome significa:
+
+*   **JavaScript:** Qualquer lógica dinâmica é tratada por JavaScript rodando no cliente. Isso pode incluir a interação com APIs de terceiros.
+*   **APIs:** Todas as funções do lado do servidor (como autenticação ou banco de dados) são abstraídas em APIs reutilizáveis, acessadas via HTTPS com JavaScript.
+*   **Markup:** O site é servido como arquivos HTML estáticos pré-renderizados. Esses arquivos são gerados no momento do build a partir de fontes como arquivos Markdown ou dados de um CMS.
+
+O fluxo principal é desacoplar o front-end do back-end. O trabalho pesado de renderização acontece durante o processo de build, resultando em um conjunto de arquivos estáticos que podem ser servidos de forma extremamente rápida e barata através de uma CDN (Content Delivery Network).
+
+Este próprio site é um exemplo de Jamstack, construído com Astro (que pré-renderiza o Markup) e hospedado em uma CDN.
+
+### Fluxo de Funcionamento
+
+<JamstackDiagram />
+
+---
+
+### Análise Arquitetural
+
+#### Quando Usar?
+*   **Sites Focados em Conteúdo:** Blogs, portais de documentação, sites de marketing, e-commerce. Qualquer site onde a maior parte do conteúdo pode ser gerada antecipadamente.
+*   **Performance é Prioridade Máxima:** Servir arquivos estáticos de uma CDN é a maneira mais rápida de entregar conteúdo a um usuário.
+*   **Segurança é uma Preocupação:** A superfície de ataque é drasticamente reduzida, pois não há um servidor de aplicação ou banco de dados para atacar diretamente. A complexidade é movida para as APIs, que podem ser protegidas separadamente.
+*   **Projetos com Orçamento Limitado:** Hospedar arquivos estáticos é muito mais barato e escalável do que manter servidores de aplicação.
+
+#### Trade-offs (Contras)
+*   **Conteúdo Altamente Dinâmico:** Se o conteúdo muda a todo segundo para cada usuário (como um feed de rede social), o modelo de build pode se tornar um gargalo. Nesses casos, SSR (Server-Side Rendering) pode ser mais apropriado.
+*   **Dependência de Builds:** Toda mudança de conteúdo exige um novo build para ser publicada. Para sites muito grandes, os tempos de build podem se tornar longos.
+*   **Complexidade Movida para o Cliente:** A lógica que antes estaria no back-end (ex: orquestração de APIs) agora pode precisar ser gerenciada no JavaScript do lado do cliente.
+
+---
+
+### Exemplos no Mundo Real
+
+*   **Aplicações Famosas:**
+    *   **Smashing Magazine:** Uma revista online de alta performance que migrou para a Jamstack.
+    *   **Cloudflare Docs:** A documentação da Cloudflare é construída com uma abordagem Jamstack.
+    *   **Vercel e Netlify Dashboards:** Embora sejam SPAs, suas landing pages e sites de documentação são exemplos perfeitos de Jamstack.
+
+*   **Stacks de Tecnologia Comuns:**
+    *   **Geradores de Site Estático (SSG):** Astro, Next.js (com `next export`), Nuxt (com `nuxt generate`), Hugo, Jekyll, Eleventy.
+    *   **Headless CMS:** Contentful, Sanity, Strapi, Storyblok.
+    *   **Serviços de API (BaaS):** Firebase, Supabase, Auth0.
+    *   **Plataformas de Deploy:** Vercel, Netlify, Cloudflare Pages, AWS Amplify.
+
+*   **Repositórios de Exemplo / Boilerplates:**
+    *   **[Astro (Este próprio site!)](https://github.com/tiagovilasboas/front-end-architecture)**
+    *   **[Next.js Commerce](https://github.com/vercel/commerce)**
+    *   **[Eleventy Base Blog](https://github.com/11ty/eleventy-base-blog)**
+    *   **[Smashing Magazine](https://www.smashingmagazine.com/)** - Um exemplo clássico de migração bem-sucedida para Jamstack para melhorar a performance.
+    *   **[Astro Docs](https://docs.astro.build/)** - A documentação do próprio Astro é, obviamente, um site Astro.
+
+---
+
+### Como Começar
+
+Iniciar com Jamstack é focado em escolher um bom Gerador de Site Estático (SSG) e uma plataforma de deploy.
+
+1.  **Crie um projeto com um SSG (ex: Astro):**
+    ```bash
+    # Crie um novo projeto Astro
+    pnpm create astro@latest my-jamstack-site
+    ```
+    Você pode seguir o assistente para configurar TypeScript, etc.
+
+2.  **Crie seu conteúdo:**
+    Em um projeto Astro, você pode criar páginas como arquivos `.astro` ou `.mdx` no diretório `src/pages/`.
+
+    ```astro
+    ---
+    // src/pages/index.astro
+    import Layout from '../layouts/Layout.astro';
+    ---
+    <Layout title="Meu Site Jamstack">
+      <h1>Bem-vindo!</h1>
+      <p>Este conteúdo é pré-renderizado no momento do build.</p>
+    </Layout>
+    ```
+
+3.  **Faça o deploy em uma CDN:**
+    Plataformas como Vercel, Netlify ou Cloudflare Pages são otimizadas para Jamstack.
+
+    *   Crie um repositório no GitHub com seu código.
+    *   Conecte sua conta da Vercel/Netlify ao GitHub.
+    *   Importe o repositório. A plataforma geralmente detecta que é um projeto Astro e configura o build e o deploy automaticamente.
+
+    Isso te dará um workflow de GitOps: cada `git push` para a branch principal irá acionar um novo build e deploy do seu site. 

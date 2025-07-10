@@ -1,0 +1,216 @@
+---
+import { Rocket, Menu } from 'lucide-astro';
+import ThemeToggle from '../ui/ThemeToggle.astro';
+import Seo from '../utils/Seo.astro';
+import Sidebar from '../sections/Sidebar.astro';
+import { ViewTransitions } from 'astro:transitions';
+import '../../styles/globals.css';
+import 'prism-themes/themes/prism-vsc-dark-plus.css';
+import { SITE_CONFIG } from '../../config';
+
+const { frontmatter = {}, ...rest } = Astro.props;
+const propsForSeo = { ...rest, ...frontmatter };
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		
+    <Seo {...propsForSeo} />
+    <ViewTransitions />
+
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+	</head>
+	<body>
+    <div class="app-shell">
+      <header class="header">
+        <div class="header-left">
+          <button id="menu-toggle" class="menu-button">
+            <Menu size={24} />
+          </button>
+          <a href="/" class="logo">
+            <Rocket size={24} />
+            <span class="logo-text">Front-end Architecture Reference</span>
+          </a>
+        </div>
+        <ThemeToggle />
+      </header>
+      <Sidebar />
+      <main class="main-content">
+        <slot />
+      </main>
+      <footer class="footer">
+        <p>Construído com <a href="https://astro.build" target="_blank">Astro</a>. 
+          Código-fonte no <a href=`https://github.com/${SITE_CONFIG.repository}` target="_blank">GitHub</a>.
+        </p>
+      </footer>
+    </div>
+    <script>
+      document.getElementById('menu-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('sidebar-visible');
+      });
+    </script>
+	</body>
+</html>
+
+<style>
+  :root {
+    --header-height: 4rem;
+    --sidebar-width: 280px;
+    --footer-height: 3rem;
+  }
+
+  .app-shell {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-height) 1fr var(--footer-height);
+    grid-template-areas:
+      'header'
+      'main'
+      'footer';
+    min-height: 100vh;
+  }
+
+  @media (min-width: 768px) {
+    .app-shell {
+      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-areas:
+        'header header'
+        'sidebar main'
+        'sidebar footer';
+    }
+  }
+
+  .header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Aumentei o espaçamento */
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--foreground);
+    font-size: 1rem; /* Defini um tamanho base */
+  }
+  
+  .logo-text {
+    display: none;
+  }
+
+  @media(min-width: 768px) {
+    .logo-text {
+      display: inline;
+    }
+  }
+
+  /* Ajuste para telas muito pequenas onde o nome completo pode quebrar */
+  @media(max-width: 420px) {
+    .logo-text {
+      font-size: 0.9rem;
+    }
+  }
+
+  .main-content {
+    grid-area: main;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+
+  .footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+  }
+
+  .footer a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    grid-area: sidebar;
+    background-color: var(--secondary);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    height: calc(100vh - var(--header-height));
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 40;
+    overflow-y: auto;
+  }
+
+  body.sidebar-visible .sidebar {
+    transform: translateX(0);
+  }
+
+  @media (min-width: 768px) {
+    .sidebar {
+      position: sticky;
+      transform: translateX(0);
+      height: calc(100vh - var(--header-height)); /* Subtrai header */
+    }
+  }
+
+  .menu-button {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    display: block;
+  }
+
+  @media (min-width: 768px) {
+    .menu-button {
+      display: none;
+    }
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+</style> 

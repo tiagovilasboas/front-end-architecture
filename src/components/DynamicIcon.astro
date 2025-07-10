@@ -1,0 +1,46 @@
+---
+// src/components/DynamicIcon.astro
+import {
+  Cloud,
+  LayoutTemplate,
+  Blocks,
+  Component,
+  Layers3,
+  Atom,
+  Puzzle,
+  Workflow,
+  Folder,
+  FolderGit2,
+  Linkedin,
+  Github,
+  BookMarked,
+  type LucideIcon
+} from 'lucide-astro';
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const { name, ...rest } = Astro.props;
+
+const icons: Record<string, LucideIcon> = {
+  cloud: Cloud,
+  'layout-template': LayoutTemplate,
+  blocks: Blocks,
+  component: Component,
+  'layers-3': Layers3,
+  atom: Atom,
+  puzzle: Puzzle,
+  workflow: Workflow,
+  folder: Folder,
+  'folder-git-2': FolderGit2,
+  linkedin: Linkedin,
+  github: Github,
+  'book-marked': BookMarked,
+};
+
+const Icon = icons[name];
+---
+{Icon && <Icon {...rest} />} 

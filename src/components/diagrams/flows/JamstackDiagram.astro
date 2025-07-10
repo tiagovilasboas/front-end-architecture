@@ -1,0 +1,56 @@
+---
+// src/components/diagrams/flows/JamstackDiagram.astro
+import DiagramContainer from "../DiagramContainer.astro";
+import DiagramNode from "../DiagramNode.astro";
+import DiagramArrow from "../DiagramArrow.astro";
+---
+<div class="jamstack-diagram">
+  <div class="build-step">
+    <span class="step-title">Fase de Build (CI/CD)</span>
+    <DiagramContainer>
+      <DiagramNode icon="git-commit" title="Git Repo" />
+      <DiagramArrow label="1. Push" />
+      <DiagramNode icon="box" title="Build Server" />
+      <DiagramArrow label="2. Gera HTML" />
+      <DiagramNode icon="globe" title="CDN" />
+    </DiagramContainer>
+  </div>
+  <div class="request-step">
+    <span class="step-title">Fase de Requisição</span>
+    <DiagramContainer>
+      <DiagramNode icon="user" title="Browser" />
+      <DiagramArrow label="3. GET" />
+      <DiagramNode icon="globe" title="CDN" />
+      <DiagramArrow label="4. HTML Estático" variant="dashed" />
+      <DiagramNode icon="user" title="Browser" />
+      <DiagramArrow label="5. Fetch" />
+      <DiagramNode icon="database" title="APIs" />
+    </DiagramContainer>
+  </div>
+</div>
+
+<style>
+  .jamstack-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    margin-block: 2rem;
+  }
+  .step-title {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .jamstack-diagram .diagram-container {
+    margin-block: 0;
+    border: none;
+    padding: 0;
+  }
+</style> 

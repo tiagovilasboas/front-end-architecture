@@ -1,0 +1,230 @@
+---
+// Componente para o Wizard de Decisão Arquitetural
+import { getCollection } from 'astro:content';
+import { Users, Puzzle } from 'lucide-astro';
+import PatternCard from './PatternCard.astro';
+
+const allPatterns = await getCollection('patterns');
+---
+
+<div class="wizard-container">
+  <div class="filters-grid">
+    <!-- Filtro 1: Tamanho do Time -->
+    <div class="filter-group">
+      <h3 class="filter-title">
+        <Users size={20} />
+        Qual o tamanho do seu time?
+      </h3>
+      <div class="card-options">
+        <button class="option-card" data-filter="teamSize" data-value="small">
+          <span class="card-title">Pequeno</span>
+          <span class="card-desc">(1-5 pessoas)</span>
+        </button>
+        <button class="option-card" data-filter="teamSize" data-value="medium">
+          <span class="card-title">Médio</span>
+          <span class="card-desc">(6-15 pessoas)</span>
+        </button>
+        <button class="option-card" data-filter="teamSize" data-value="large">
+          <span class="card-title">Grande</span>
+          <span class="card-desc">(+15 / Múltiplos times)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Filtro 2: Complexidade do Produto -->
+    <div class="filter-group">
+      <h3 class="filter-title">
+        <Puzzle size={20} />
+        Qual a complexidade do produto?
+      </h3>
+      <div class="card-options">
+        <button class="option-card" data-filter="complexity" data-value="low">
+          <span class="card-title">Baixa</span>
+          <span class="card-desc">(Site de conteúdo, Landing Page)</span>
+        </button>
+        <button class="option-card" data-filter="complexity" data-value="medium">
+          <span class="card-title">Média</span>
+          <span class="card-desc">(Dashboard, App CRUD)</span>
+        </button>
+        <button class="option-card" data-filter="complexity" data-value="high">
+          <span class="card-title">Alta</span>
+          <span class="card-desc">(Editor, Super App)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-grid">
+    {allPatterns.map(pattern => (
+      <div id={pattern.slug} class="pattern-wrapper">
+        <PatternCard {pattern} />
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Mapeamento de recomendações. Cada padrão recebe um "match" ideal.
+  const PATTERN_RECOMMENDATIONS = {
+    'spa': { teamSize: 'medium', complexity: 'medium' },
+    'jamstack': { teamSize: 'small', complexity: 'low' },
+    'islands-architecture': { teamSize: 'small', complexity: 'low' },
+    'micro-frontends': { teamSize: 'large', complexity: 'high' },
+    'clean-architecture': { teamSize: 'medium', complexity: 'high' },
+    'atomic-design': { teamSize: 'medium', complexity: 'medium' },
+    'component-driven': { teamSize: 'small', complexity: 'low' },
+    'state-machines': { teamSize: 'small', complexity: 'high' },
+    'monorepo': { teamSize: 'large', complexity: 'high' },
+  };
+
+  const filters = {
+    teamSize: null,
+    complexity: null,
+  };
+
+  const filterButtons = document.querySelectorAll('.option-card');
+  const patternWrappers = document.querySelectorAll('.pattern-wrapper');
+  const resultsGrid = document.querySelector('.results-grid');
+
+  function updateResults() {
+    const scores = {};
+
+    patternWrappers.forEach(wrapper => {
+      const id = wrapper.id;
+      scores[id] = 0;
+      const recommendation = PATTERN_RECOMMENDATIONS[id];
+      if (!recommendation) return;
+
+      // Lógica de pontuação simples
+      if (filters.teamSize && filters.teamSize === recommendation.teamSize) {
+        scores[id] += 2;
+      }
+      if (filters.complexity && filters.complexity === recommendation.complexity) {
+        scores[id] += 2;
+      }
+      if (filters.teamSize === 'large' && (id === 'micro-frontends' || id === 'monorepo')) {
+        scores[id] += 1;
+      }
+    });
+
+    const sortedPatterns = Array.from(patternWrappers).sort((a, b) => {
+      return scores[b.id] - scores[a.id];
+    });
+    
+    // Reordena os elementos no DOM
+    sortedPatterns.forEach(el => resultsGrid.appendChild(el));
+
+    // Aplica estilo com base na pontuação
+    patternWrappers.forEach(wrapper => {
+        const score = scores[wrapper.id];
+        if (!filters.teamSize && !filters.complexity) {
+            wrapper.style.opacity = '1';
+            wrapper.style.transform = 'scale(1)';
+        } else {
+            if (score > 0) {
+                wrapper.style.opacity = '1';
+                wrapper.style.transform = 'scale(1)';
+            } else {
+                wrapper.style.opacity = '0.5';
+                wrapper.style.transform = 'scale(0.95)';
+            }
+        }
+    });
+  }
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      const value = button.dataset.value;
+      
+      const parent = button.parentElement;
+      parent.querySelectorAll('.option-card').forEach(btn => btn.classList.remove('selected'));
+      
+      if (filters[filter] === value) {
+        filters[filter] = null; // Desselecionar
+      } else {
+        button.classList.add('selected');
+        filters[filter] = value;
+      }
+      
+      updateResults();
+    });
+  });
+
+  // Estado inicial
+  updateResults();
+</script>
+
+<style>
+  .wizard-container {
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .filter-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .card-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .option-card {
+    background-color: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .option-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+  }
+
+  .option-card.selected {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+  }
+
+  .card-title {
+    font-weight: 600;
+  }
+
+  .card-desc {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .pattern-wrapper {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+</style> 

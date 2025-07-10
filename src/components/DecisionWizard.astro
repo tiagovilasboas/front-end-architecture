@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import PatternCard from '../cards/PatternCard.astro';
+
+const patterns = await getCollection('patterns');
+---
+
+<div class="wizard-container">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">Ainda na dúvida?</h2>
+    <p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
+      Responda a algumas perguntas abaixo. Eu te ajudo a filtrar as opções e achar um ponto de partida.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="filter-group">
+      <h3 class="font-semibold mb-2">Qual o tamanho do seu time?</h3>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="timeSize" value="pequeno" class="filter-radio" data-key="timeSize" />
+          Sou eu e/ou um time pequeno (1-5)
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="timeSize" value="medio" class="filter-radio" data-key="timeSize" />
+          Time de tamanho médio (6-15)
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="timeSize" value="grande" class="filter-radio" data-key="timeSize" />
+          Time grande ou vários times (16+)
+        </label>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h3 class="font-semibold mb-2">Qual a complexidade do produto?</h3>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="productComplexity" value="simples" class="filter-radio" data-key="productComplexity" />
+          É simples, tipo um blog ou site institucional.
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="productComplexity" value="media" class="filter-radio" data-key="productComplexity" />
+          Tem uma complexidade média, como um e-commerce.
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="productComplexity" value="complexa" class="filter-radio" data-key="productComplexity" />
+          É uma aplicação bem complexa (SaaS, ERP...).
+        </label>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h3 class="font-semibold mb-2">SEO é o mais importante?</h3>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="seo" value="sim" class="filter-radio" data-key="seo" />
+          Sim, o Google precisa me amar.
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="seo" value="nao" class="filter-radio" data-key="seo" />
+          Não, é uma app logada ou interna.
+        </label>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h3 class="font-semibold mb-2">E a performance de load inicial?</h3>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="performance" value="sim" class="filter-radio" data-key="performance" />
+          Tem que ser um foguete! (ex: e-commerce)
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="performance" value="nao" class="filter-radio" data-key="performance" />
+          É importante, mas não é o fator principal.
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="patterns-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {patterns.map(pattern => (
+      <div class="pattern-card-wrapper" data-tags={JSON.stringify(pattern.data.scores)}>
+        <PatternCard pattern={pattern} />
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+// ... (script existente)
+</script>

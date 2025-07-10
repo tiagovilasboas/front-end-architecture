@@ -1,0 +1,40 @@
+---
+import Header from '../components/Header.astro';
+import Sidebar from '../components/sections/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+import { ViewTransitions } from 'astro:transitions';
+
+const { frontmatter } = Astro.props;
+const baseTitle = 'O Guia do Arquiteto Front-end';
+const pageTitle = frontmatter.title ? `${frontmatter.title} | ${baseTitle}` : baseTitle;
+---
+
+<!doctype html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={frontmatter.description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={frontmatter.description} />
+	</head>
+	<body class="min-h-screen bg-background font-sans antialiased">
+    <div class="relative flex min-h-screen flex-col">
+      <Header />
+      <div class="flex-1">
+        <div class="grid lg:grid-cols-[280px_1fr] h-full">
+          <Sidebar />
+          <div class="prose dark:prose-invert max-w-none p-6 lg:p-10">
+            <ViewTransitions />
+            <slot />
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+	</body>
+</html> 

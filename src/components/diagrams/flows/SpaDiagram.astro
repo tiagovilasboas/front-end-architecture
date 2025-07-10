@@ -1,0 +1,17 @@
+---
+// src/components/diagrams/flows/SpaDiagram.astro
+import DiagramContainer from "../DiagramContainer.astro";
+import DiagramNode from "../DiagramNode.astro";
+import DiagramArrow from "../DiagramArrow.astro";
+---
+<DiagramContainer>
+  <DiagramNode icon="user" title="Browser" />
+  <DiagramArrow label="1. GET /" />
+  <DiagramNode icon="server" title="Server" />
+  <DiagramArrow label="2. HTML Shell + JS Bundle" variant="dashed" />
+  <DiagramNode icon="user" title="Browser" />
+  <DiagramArrow label="3. GET /api/data" />
+  <DiagramNode icon="database" title="API" />
+  <DiagramArrow label="4. JSON" variant="dashed" />
+  <DiagramNode icon="user" title="Browser" />
+</DiagramContainer> 

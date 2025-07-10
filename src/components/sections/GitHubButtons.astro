@@ -1,0 +1,51 @@
+---
+import { Star, GitFork } from 'lucide-astro';
+import { SITE_CONFIG } from '../../config';
+
+interface Props {
+  stars: string | number;
+  forks: string | number;
+  repoName?: string;
+}
+
+const { stars, forks, repoName = SITE_CONFIG.githubRepo } = Astro.props;
+---
+<div class="button-group">
+  <a href={`https://github.com/${repoName}`} target="_blank" rel="noopener noreferrer" class="button">
+    <Star size={16} />
+    <span>Star</span>
+    <strong>{stars}</strong>
+  </a>
+  <a href={`https://github.com/${repoName}/fork`} target="_blank" rel="noopener noreferrer" class="button">
+    <GitFork size={16} />
+    <span>Fork</span>
+    <strong>{forks}</strong>
+  </a>
+</div>
+
+<style>
+  .button-group {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  .button:hover {
+    background-color: var(--accent);
+  }
+  .button strong {
+    font-weight: 700;
+  }
+</style> 

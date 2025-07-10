@@ -1,0 +1,195 @@
+---
+title: 'Clean Architecture'
+description: 'Adapte os princípios da Clean Architecture para o front-end, separando a lógica de negócios das dependências de frameworks e UI.'
+icon: 'layers-3'
+layout: '../../layouts/ContentLayout.astro'
+category: 'Arquiteturas de Aplicação'
+---
+
+"Clean Architecture" no front-end soa, para muitos, como um exagero. "Isso é coisa de back-end!", eles dizem. E por um bom tempo eu concordei. A gente vive no mundo do framework da semana, onde a lógica de negócio muitas vezes mora dentro de um hook do React ou de um `computed` do Vue.
+
+A ficha caiu para mim quando precisei migrar uma aplicação enorme de Angular.js para React. Foi um pesadelo. A lógica de negócio estava tão misturada com o `ng-repeat` e os `$scope` que tivemos que reescrever quase tudo do zero. Se a lógica de verdade (as regras de carrinho de compras, as validações de formulário, etc.) estivesse em funções puras, em arquivos que não importavam nada de Angular, a migração teria sido 10x mais fácil.
+
+É isso que a Clean Architecture te oferece: um seguro de vida para o seu código. Ela te força a separar o que é *seu* (sua lógica de negócio) do que é *deles* (o framework, a API do browser). É um investimento inicial maior, mas que te dá liberdade e longevidade.
+
+### O que é?
+
+---
+name: Arquitetura Limpa para UI
+slug: clean-architecture
+description: >-
+  Isolar a lógica de domínio das dependências de framework para criar sistemas
+  mais testáveis e independentes.
+icon: layers
+category: 'Arquitetura de Aplicação'
+featured: true
+---
+
+## O Problema que Resolve
+
+Em muitas aplicações front-end, a lógica de negócio acaba misturada com a lógica de apresentação (estado de componentes, manipulação de eventos do DOM, etc.). Esse acoplamento torna o código:
+
+-   **Dependente do Framework**: A lógica de negócio fica presa ao React, Vue ou Angular, dificultando a migração ou o reaproveitamento em outras plataformas (como React Native).
+-   **Difícil de Testar**: Para testar uma simples regra de negócio, muitas vezes é preciso renderizar componentes da UI e simular interações complexas.
+-   **Frágil**: Uma mudança no design pode quebrar a lógica de negócio, e vice-versa.
+
+A Arquitetura Limpa (Clean Architecture), adaptada para o front-end, propõe uma solução para separar essas responsabilidades de forma clara.
+
+## Como Funciona
+
+A ideia central é organizar o código em camadas concêntricas, com uma regra de dependência estrita: **as camadas externas dependem das camadas internas, mas as internas não sabem nada sobre as externas.**
+
+1.  **Entidades (Domínio)**: O núcleo da aplicação. Contêm os modelos de dados e a lógica de negócio mais pura, sem nenhuma dependência de frameworks. Ex: as regras de validação de um carrinho de compras, os tipos de um produto.
+
+2.  **Casos de Uso (Lógica da Aplicação)**: Orquestram o fluxo de dados entre as entidades e a UI. Eles definem as ações que a aplicação pode realizar. Ex: `adicionarItemAoCarrinho`, `calcularTotalDoPedido`.
+
+3.  **Adaptadores (Interface)**: A camada de "tradução" que conecta o núcleo da aplicação com o mundo exterior. Inclui:
+    -   **Componentes da UI**: Adaptam as interações do usuário (cliques, inputs) em chamadas para os Casos de Uso.
+    -   **Gateways de Serviços**: Adaptam a busca de dados de uma API, o acesso ao `localStorage`, etc.
+
+4.  **Frameworks e Drivers (Infraestrutura)**: A camada mais externa. Contém o framework da UI (React), as bibliotecas de busca de dados (axios, fetch) e o próprio navegador.
+
+## Diagrama de Fluxo
+
+```mermaid
+graph TD
+    subgraph " "
+        direction LR
+        E((Entidades))
+    end
+    subgraph " "
+        direction LR
+        U(Casos de Uso)
+    end
+    subgraph " "
+        direction LR
+        P(Adaptadores)
+    end
+     subgraph " "
+        direction LR
+        F(Frameworks)
+    end
+
+    F --› P;
+    P --› U;
+    U --› E;
+
+    style E fill:#f9f,stroke:#333,stroke-width:2px
+    style U fill:#ccf,stroke:#333,stroke-width:2px
+    style P fill:#cfc,stroke:#333,stroke-width:2px
+    style F fill:#fcf,stroke:#333,stroke-width:2px
+```
+
+## Benefícios
+
+-   **Independência de Framework**: A lógica de negócio pode ser reutilizada com qualquer framework de UI.
+-   **Testabilidade**: As camadas internas podem ser testadas de forma rápida e isolada, sem a necessidade de renderizar a UI ou fazer chamadas de API.
+-   **Manutenção e Escalabilidade**: Limites claros facilitam a adição de novas funcionalidades e o trabalho de equipes diferentes em paralelo.
+
+## TL;DR
+
+-   **Inversão de Dependência**: A lógica de negócio não sabe nada sobre a UI ou a API.
+-   **Camadas Claras**: As dependências fluem sempre para dentro (UI → Casos de Uso → Entidades).
+-   **Testável e Flexível**: Facilita a criação de testes robustos e a adaptação a novas tecnologias.
+
+## Referências
+
+- **[The Clean Architecture by Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)** - O artigo original de Robert C. Martin (Uncle Bob).
+- **[Clean Architecture for React](https://dev.to/tomek/clean-architecture-for-react-42l3)** - Um guia prático de aplicação no ecossistema React.
+
+---
+
+### Análise Arquitetural
+
+#### Quando Usar?
+*   **Aplicações de Longa Duração e Alta Complexidade:** Onde a lógica de negócio é o ativo mais importante e precisa sobreviver a mudanças de framework (ex: migrar de React para Svelte).
+*   **Times que Valorizam Testabilidade:** A separação de camadas torna o código de domínio extremamente fácil de testar, pois ele não tem dependências de UI ou de infraestrutura.
+*   **Produtos com Múltiplas Interfaces:** Quando a mesma lógica de negócio precisa ser exposta em uma aplicação web, um app mobile e uma API pública. A camada de domínio pode ser compartilhada entre todos eles.
+
+#### Trade-offs (Contras)
+*   **Curva de Aprendizagem:** É um padrão abstrato e exige disciplina do time. Não é trivial de implementar corretamente no início.
+*   **Verboso (Boilerplate):** Exige a criação de mais arquivos e camadas (entidades, casos de uso, adaptadores) do que uma arquitetura tradicional, o que pode parecer excessivo para projetos simples.
+*   **Risco de "Clean Layer Hell":** Uma implementação ruim pode levar a um excesso de arquivos que apenas passam dados de uma camada para outra sem agregar valor, tornando a navegação no código confusa.
+
+---
+
+### Exemplos no Mundo Real
+
+*   **Filosofia Adotada Por:**
+    *   A Arquitetura Limpa é mais um **blueprint mental** do que uma biblioteca. Empresas que investem em software de longa duração e com lógica de negócio complexa tendem a adotar seus princípios, mesmo que não sigam o diagrama à risca.
+
+*   **Stacks de Tecnologia Comuns:**
+    *   **Agnóstico de Framework:** A ideia central é justamente *não depender* de um framework. A lógica de domínio é escrita em TypeScript ou JavaScript puro.
+    *   **Injeção de Dependência:** Ferramentas como `InversifyJS` ou `TSyringe` podem ajudar a gerenciar as dependências entre as camadas.
+
+*   **Repositórios de Exemplo / Boilerplates:**
+    *   **[React Layered Boilerplate (do seu criador!)](https://github.com/tiagovilasboas/react-layered-boilerplate)**
+    *   **[Node.js Clean Architecture](https://github.com/leandroluk/nodejs-clean-architecture-example)** - Exemplo prático aplicado a um backend Node.js.
+    *   **[Vue.js Clean Architecture](https://github.com/igeligel/vue-clean-architecture)**
+
+---
+
+### Como Começar
+
+Aplicar Clean Architecture é sobre disciplina e estrutura de diretórios. Não depende de um framework.
+
+1.  **Defina sua Estrutura de Camadas:**
+    Uma estrutura de pastas comum para um projeto front-end seguindo a Clean Architecture poderia ser:
+
+    ```
+    src/
+    ├── core/
+    │   ├── entities/       # Modelos de domínio puros (ex: User, Product)
+    │   │   └── user.ts
+    │   └── usecases/       # Lógica de negócio (ex: GetUser, AddProductToCart)
+    │       └── get-user.ts
+    ├── infra/
+    │   └── http/           # Clientes HTTP, implementações de repositórios
+    │       └── user-repository-http.ts
+    ├── presentation/
+    │   ├── components/     # Componentes de UI (React, Vue, etc.)
+    │   │   └── UserProfile.tsx
+    │   └── pages/          # Páginas que orquestram os componentes
+    │       └── UserPage.tsx
+    └── main/
+        └── factories/      # Composição das dependências
+            └── make-get-user-usecase.ts
+    ```
+
+2.  **Comece pelo Domínio (Core):**
+    Defina suas entidades e casos de uso sem pensar em bibliotecas ou frameworks.
+
+    *   **Entidade (`core/entities/user.ts`):**
+        ```typescript
+        // Totalmente livre de dependências externas
+        export interface User {
+          id: string;
+          name: string;
+          email: string;
+        }
+        ```
+
+    *   **Caso de Uso (`core/usecases/get-user.ts`):**
+        Ele depende de uma abstração (interface) de um repositório, não de uma implementação concreta.
+        ```typescript
+        import { User } from '../entities/user';
+
+        // Abstração do repositório
+        export interface UserRepository {
+          findById(id: string): Promise<User | null>;
+        }
+
+        // Caso de uso
+        export class GetUser {
+          constructor(private userRepository: UserRepository) {}
+
+          async execute(id: string): Promise<User | null> {
+            return this.userRepository.findById(id);
+          }
+        }
+        ```
+
+3.  **Implemente as Camadas Externas:**
+    Agora, crie as implementações concretas que dependem do `core`.
+
+    *   **Implementação do Repositório (`

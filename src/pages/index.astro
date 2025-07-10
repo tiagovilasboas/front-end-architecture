@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../components/layouts/BaseLayout.astro';
+import PatternsGrid from '../components/sections/PatternsGrid.astro';
+import GitHubButtons from '../components/sections/GitHubButtons.astro';
+import { getRepoStats } from '../lib/services/github';
+import { getFeaturedPatterns } from '../lib/patterns';
+import { SITE_CONFIG } from '../config';
+
+const ghStats = await getRepoStats(SITE_CONFIG.githubRepo);
+const featuredPatterns = await getFeaturedPatterns();
+---
+<BaseLayout>
+  <section class="hero-section">
+    <h1 class="title">Modern Front-End Architecture</h1>
+    <p class="subtitle">
+      A curated collection of battle-tested patterns and practices for building modern, maintainable, and scalable front-end applications.
+    </p>
+    <GitHubButtons stars={ghStats.stars} forks={ghStats.forks} />
+  </section>
+  
+  <section class="patterns-section">
+    <h2 class="section-title">Explore the Patterns</h2>
+    <PatternsGrid patterns={featuredPatterns} />
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .title {
+    font-size: 2.25rem; /* 36px */
+    line-height: 2.5rem; /* 40px */
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+  @media (min-width: 640px) {
+    .title {
+      font-size: 3rem; /* 48px */
+      line-height: 1;
+    }
+  }
+  .subtitle {
+    max-width: 42rem; /* 672px */
+    color: var(--muted-foreground);
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+  }
+  .patterns-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.875rem; /* 30px */
+    line-height: 2.25rem; /* 36px */
+    font-weight: 700;
+  }
+</style> 

@@ -1,0 +1,75 @@
+---
+title: 'Monorepo'
+description: 'Entenda a abordagem de Monorepo, que centraliza o código de múltiplos projetos em um único repositório para facilitar o compartilhamento de código e a gestão de dependências.'
+icon: 'folder-git-2'
+layout: '../../layouts/ContentLayout.astro'
+category: 'Organização de Código'
+featured: false
+scores:
+  timeSize: 3
+  productComplexity: 3
+  seo: 1
+  performance: 2
+---
+
+Monorepos são um tópico que divide opiniões. Eu mesmo já passei por fases de amar e odiar. A promessa é linda: um só lugar para todo o seu código (front-end, back-end, libs), compartilhamento de código simplificado, uma única fonte da verdade. Gigantes como Google e Meta usam essa abordagem.
+
+Na prática, a beleza do monorepo depende quase 100% das suas ferramentas. Sem um bom gerenciador de tarefas (como `Nx` ou `Turborepo`) para rodar builds e testes apenas no que foi alterado, seu CI pode levar uma eternidade. Sem um versionamento bem definido, você pode cair no inferno das dependências.
+
+Minha dica: comece simples. Se você tem dois projetos que compartilham muita lógica, um monorepo pode ser uma boa. Mas não adote só porque está na moda. Adote se a dor de gerenciar múltiplos repositórios se tornar maior do que a dor de configurar um monorepo.
+
+### O que é?
+
+Um Monorepo (abreviação de "repositório monolítico") é uma estratégia de desenvolvimento de software onde o código de muitos projetos é armazenado no mesmo repositório.
+
+```
+/monorepo
+├── apps/
+│   ├── web-app/
+│   └── mobile-app/
+├── packages/
+│   ├── ui-components/
+│   ├── shared-logic/
+│   └── eslint-config/
+└── package.json
+```
+
+Ferramentas modernas como **Turborepo** e **Nx** tornaram os monorepos mais acessíveis, otimizando tarefas como a instalação de dependências e a execução de builds e testes apenas nos projetos que foram alterados.
+
+### Principais Vantagens
+
+*   **Compartilhamento de Código Simplificado:** É trivial importar uma biblioteca de componentes (`ui-components`) em uma aplicação (`web-app`). As mudanças em uma biblioteca compartilhada são refletidas instantaneamente em todos os seus consumidores.
+*   **Refatoração Atômica:** Você pode fazer uma mudança que afeta múltiplos projetos em um único commit. Por exemplo, renomear uma propriedade em um componente da UI e atualizar seu uso em todas as aplicações de uma só vez.
+*   **Visibilidade e Colaboração:** Todos têm visibilidade sobre todo o código, o que pode encorajar a colaboração e a padronização.
+
+---
+
+### Análise Arquitetural
+
+#### Quando Usar?
+*   **Múltiplos Projetos com Dependências Compartilhadas:** O caso de uso clássico. Por exemplo, uma aplicação web, um app mobile e um site de marketing que compartilham o mesmo sistema de design e lógica de negócio.
+*   **Grandes Equipes e Organizações:** Facilita a governança e a padronização de código, linting e configurações de build em toda a empresa.
+*   **Para Forçar a Consistência:** Ter um único local para a "fonte da verdade" (componentes, lógica, tipos) ajuda a evitar que os projetos divirjam.
+
+#### Trade-offs (Contras)
+*   **Complexidade de Ferramental (Tooling):** Requer ferramentas especializadas (como Turborepo/Nx) para ser gerenciável. A configuração inicial é mais complexa do que em um repositório simples.
+*   **Performance do Repositório:** Em escala massiva, operações do Git (como `clone` ou `checkout`) podem se tornar lentas.
+*   **Acoplamento Indesejado:** Se não houver uma governança clara, os desenvolvedores podem começar a criar dependências confusas entre os projetos, transformando a colaboração em um problema. É crucial definir regras de limites (ex: "aplicações não podem depender de outras aplicações").
+
+---
+
+### Exemplos no Mundo Real
+
+*   **Empresas Famosas:**
+    *   **Google:** O exemplo mais famoso e de maior escala, gerenciando quase todo o seu código em um único repositório.
+    *   **Meta (Facebook):** Também utiliza um monorepo para seus principais projetos, como o app do Facebook e Instagram.
+    *   **Microsoft:** Mantém muitos projetos grandes, como o Windows, em monorepos.
+
+*   **Stacks de Tecnologia Comuns:**
+    *   **Ferramentas de Gerenciamento:** Turborepo, Nx, Lerna (legado), Bazel (Google).
+    *   **Gerenciadores de Pacote:** `pnpm` ou `yarn` workspaces são quase obrigatórios para gerenciar as dependências de forma eficiente.
+
+*   **Repositórios de Exemplo / Boilerplates:**
+    *   **[Turborepo Starter](https://github.com/vercel/turborepo/tree/main/examples/basic)**
+    *   **[Nx Official Examples](https://github.com/nrwl/nx-examples)**
+    *   **[Mantine UI (usa pnpm + Turborepo)](https://github.com/mantinedev/mantine)** 

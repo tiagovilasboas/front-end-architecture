@@ -1,0 +1,98 @@
+---
+import { Atom, Sailboat, Layers } from 'lucide-astro';
+
+interface Pattern {
+  name: string;
+  slug: string;
+  tagline: string;
+  icon: 'atom' | 'sailboat' | 'layers';
+  featured?: boolean;
+}
+
+interface Props {
+  patterns: Pattern[];
+}
+
+// Mapeamento de ícones para componentes Astro
+const icons = {
+  atom: Atom,
+  sailboat: Sailboat,
+  layers: Layers,
+};
+
+const { patterns } = Astro.props;
+---
+
+<div class="grid">
+  {patterns.map((pattern) => {
+    const IconComponent = icons[pattern.icon];
+    return (
+      <a href={`/patterns/${pattern.slug}`} class="card">
+        <div class="card-header">
+          {IconComponent && <IconComponent class="icon" />}
+          <h3 class="card-title">{pattern.name}</h3>
+        </div>
+        <div class="card-content">
+          <p>{pattern.tagline}</p>
+        </div>
+      </a>
+    );
+  })}
+</div>
+
+<style>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--card-foreground);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--primary);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-content {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.card-content p {
+  color: var(--muted-foreground);
+  margin: 0;
+}
+</style> 

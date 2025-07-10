@@ -1,0 +1,56 @@
+---
+import { Sun, Moon } from 'lucide-astro';
+---
+<button id="theme-toggle-btn" class="theme-toggle">
+  <Sun class="icon sun" />
+  <Moon class="icon moon" />
+</button>
+
+<style>
+  .theme-toggle {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .theme-toggle:hover {
+    background-color: var(--accent);
+  }
+  .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .dark .sun {
+    display: none;
+  }
+  .light .moon {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        document.documentElement.classList.toggle('light', !isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    }
+
+    // Set initial state of the button icon based on theme
+    const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (currentTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  });
+</script> 

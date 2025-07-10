@@ -1,0 +1,21 @@
+---
+// src/components/diagrams/DiagramContainer.astro
+---
+<div class="diagram-container">
+  <slot />
+</div>
+
+<style>
+.diagram-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-block: 2rem;
+  overflow-x: auto;
+}
+</style> 
