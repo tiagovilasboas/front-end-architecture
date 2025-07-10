@@ -1,0 +1,43 @@
+---
+const patterns = [
+  {
+    title: 'Atomic Design',
+    description: 'A methodology for creating design systems, where interfaces are broken down into fundamental building blocks.',
+    url: '/patterns/atomic-design',
+  },
+  {
+    title: 'Render Props',
+    description: 'A technique for sharing code between components using a prop whose value is a function.',
+    url: '/patterns/render-props',
+  },
+  {
+    title: 'Hooks',
+    description: 'Functions that let you “hook into” React state and lifecycle features from function components.',
+    url: '/patterns/hooks',
+  },
+    {
+    title: 'Server Components',
+    description: 'A new architecture that allows rendering components on the server, reducing the amount of JavaScript sent to the client.',
+    url: '/patterns/server-components',
+  },
+  {
+    title: 'State Machines',
+    description: 'A mathematical model of computation used to design and implement complex user interfaces and logic.',
+    url: '/patterns/state-machines',
+  },
+  {
+    title: 'Islands Architecture',
+    description: 'A pattern for building fast websites by reducing the amount of JavaScript shipped to the client, while still allowing for interactive components.',
+    url: '/patterns/islands-architecture',
+  },
+];
+---
+
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  {patterns.map((pattern) => (
+    <a href={pattern.url} class="block rounded-lg border bg-card p-6 text-card-foreground shadow-sm transition-shadow duration-200 hover:shadow-md">
+      <h3 class="text-lg font-semibold">{pattern.title}</h3>
+      <p class="mt-2 text-sm text-muted-foreground">{pattern.description}</p>
+    </a>
+  ))}
+</div> 
