@@ -57,11 +57,6 @@ const propsForSeo = { ...rest, ...frontmatter };
       <main class="main-content">
         <slot />
       </main>
-      <footer class="footer">
-        <p>Construído com <a href="https://astro.build" target="_blank">Astro</a>. 
-          Código-fonte no <a href=`https://github.com/${SITE_CONFIG.repository}` target="_blank">GitHub</a>.
-        </p>
-      </footer>
     </div>
     <script>
       document.getElementById('menu-toggle').addEventListener('click', () => {
