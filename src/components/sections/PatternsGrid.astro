@@ -1,43 +1,35 @@
 ---
-import { Atom, Sailboat, Layers } from 'lucide-astro';
+import DynamicIcon from '../DynamicIcon.astro';
 
 interface Pattern {
-  name: string;
+  data: {
+    title: string;
+    description: string;
+    icon: string;
+    featured?: boolean;
+  };
   slug: string;
-  tagline: string;
-  icon: 'atom' | 'sailboat' | 'layers';
-  featured?: boolean;
 }
 
 interface Props {
   patterns: Pattern[];
 }
 
-// Mapeamento de ícones para componentes Astro
-const icons = {
-  atom: Atom,
-  sailboat: Sailboat,
-  layers: Layers,
-};
-
 const { patterns } = Astro.props;
 ---
 
 <div class="grid">
-  {patterns.map((pattern) => {
-    const IconComponent = icons[pattern.icon];
-    return (
-      <a href={`/patterns/${pattern.slug}`} class="card">
-        <div class="card-header">
-          {IconComponent && <IconComponent class="icon" />}
-          <h3 class="card-title">{pattern.name}</h3>
-        </div>
-        <div class="card-content">
-          <p>{pattern.tagline}</p>
-        </div>
-      </a>
-    );
-  })}
+  {patterns.map((pattern) => (
+    <a href={`/patterns/${pattern.slug}`} class="card">
+      <div class="card-header">
+        <DynamicIcon icon={pattern.data.icon} class="icon" />
+        <h3 class="card-title">{pattern.data.title}</h3>
+      </div>
+      <div class="card-content">
+        <p>{pattern.data.description}</p>
+      </div>
+    </a>
+  ))}
 </div>
 
 <style>
