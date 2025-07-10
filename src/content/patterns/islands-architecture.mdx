@@ -2,8 +2,8 @@
 title: 'Islands Architecture'
 description: 'Descubra a Arquitetura de Ilhas, um padrão que favorece a entrega de HTML estático com "ilhas" de interatividade, melhorando drasticamente a performance e o Time to Interactive (TTI).'
 icon: 'component'
-category: 'Arquiteturas de Aplicação'
-featured: true
+category: 'Arquitetura'
+layout: '../../layouts/ContentLayout.astro'
 ---
 
 Se a SPA é um extremo (tudo no cliente) e o MPA/SSR tradicional é outro (tudo no servidor), a Arquitetura de Ilhas é o meio-termo genial que o mundo front-end precisava. A ideia, popularizada pelo Astro, é incrivelmente simples e poderosa: por padrão, envie HTML puro, sem JavaScript. E então, para cada componente que *precisa* de interatividade, crie uma "ilha" isolada de JavaScript.
