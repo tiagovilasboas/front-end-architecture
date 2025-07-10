@@ -17,7 +17,6 @@ const featuredPatterns = await getFeaturedPatterns();
   <WhyGuide />
   
   <section class="patterns-section">
-    <h2 class="section-title">Explore os Padrões</h2>
     <PatternsGrid patterns={featuredPatterns} />
   </section>
   
@@ -28,12 +27,5 @@ const featuredPatterns = await getFeaturedPatterns();
   .patterns-section {
     padding-top: 4rem;
     padding-bottom: 4rem;
-  }
-  .section-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.875rem; /* 30px */
-    line-height: 2.25rem; /* 36px */
-    font-weight: 700;
   }
 </style> 
