@@ -1,0 +1,41 @@
+---
+import "../styles/globals.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro + Shadcn/UI</title>
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <main class="container py-10">
+      <div class="flex flex-col items-center gap-6">
+        <h1 class="text-4xl font-extrabold tracking-tighter">
+          Astro + Tailwind + MDX + Shadcn/UI
+        </h1>
+        <p class="text-lg text-muted-foreground">
+          Seu projeto está pronto para decolar!
+        </p>
+
+        <div class="mt-8 rounded-lg border p-6 text-center">
+          <h2 class="text-xl font-semibold">Próximos Passos</h2>
+          <p class="mt-2 text-muted-foreground">
+            Para adicionar um novo componente Shadcn/UI, rode o comando abaixo no seu terminal:
+          </p>
+          <code class="mt-4 inline-block rounded-md bg-muted px-4 py-2 font-mono text-sm">
+            npx shadcn-ui-astro@latest add button
+          </code>
+          <p class="mt-2 text-muted-foreground">
+            Depois, você pode importá-lo em qualquer componente Astro ou página, assim:
+          </p>
+           <code class="mt-4 inline-block rounded-md bg-muted px-4 py-2 font-mono text-sm">
+            import { Button } from '~/lib/ui/button';
+          </code>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
