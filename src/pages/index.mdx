@@ -1,5 +1,25 @@
 ---
 layout: ../layouts/BaseLayout.astro
+const featuredPatterns = [
+  {
+    slug: 'atomic-design',
+    name: 'Atomic Design',
+    tagline: 'A methodology for creating design systems.',
+    icon: 'atom',
+  },
+  {
+    slug: 'islands-architecture',
+    name: 'Islands',
+    tagline: 'Build faster websites with less JavaScript.',
+    icon: 'sailboat',
+  },
+  {
+    slug: 'state-machines',
+    name: 'State Machines',
+    tagline: 'Design complex UIs with predictable state.',
+    icon: 'workflow',
+  },
+];
 ---
 
 import { Icon } from 'lucide-astro';
@@ -29,4 +49,7 @@ import { Button } from '~/lib/ui/button';
   </div>
 </section>
 
-<PatternsGrid /> 
+<div class="my-12">
+  <h2 class="mb-8 text-center text-3xl font-bold tracking-tighter">Featured Patterns</h2>
+  <PatternsGrid patterns={featuredPatterns} />
+</div> 
