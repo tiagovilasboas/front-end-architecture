@@ -5,47 +5,67 @@
     <h2 class="section-title">Por que este Guia?</h2>
     <div class="prose">
       <p>
-        O cenário front-end evolui em um ritmo alucinante. Novas frameworks, bibliotecas e ferramentas surgem constantemente, cada uma prometendo ser a próxima bala de prata. Embora a inovação seja empolgante, ela também gera complexidade e fadiga na tomada de decisões.
+        O cenário front-end evolui em um ritmo alucinante, gerando complexidade e fadiga na tomada de decisões. Este guia foi criado para ser sua bússola, ajudando você a:
       </p>
-      <p>
-        Como escolher as ferramentas certas? Como estruturar uma aplicação que seja escalável, sustentável e que dê prazer em trabalhar por meses ou até anos?
-      </p>
-      <p>
-        Este guia foi criado para cortar o ruído. Não se trata de seguir tendências; trata-se de compreender os padrões arquitetônicos fundamentais e testados em batalha que sustentam aplicações front-end de sucesso e duradouras. Aqui, você encontrará uma coleção selecionada de estratégias para ajudá-lo a tomar decisões informadas e construir com confiança.
-      </p>
+      <ul>
+        <li>
+          <strong>Navegar na Complexidade:</strong> Cortar o ruído do ecossistema e entender os prós e contras de cada padrão para tomar decisões mais inteligentes.
+        </li>
+        <li>
+          <strong>Focar em Padrões Testados:</strong> Esquecer as últimas tendências e focar em estratégias arquitetônicas robustas que sustentam aplicações duradouras.
+        </li>
+        <li>
+          <strong>Construir com Confiança:</strong> Adquirir a base necessária para projetar sistemas que são escaláveis, sustentáveis e um prazer de manter a longo prazo.
+        </li>
+      </ul>
     </div>
   </div>
 </section>
 
 <style>
   .why-guide-section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: var(--card);
+    padding: 4rem 1rem;
+    background-color: var(--muted);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
   }
   .container {
-    width: 86%;
-    max-width: 56rem; /* ~896px */
+    max-width: 65ch;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    text-align: center;
   }
   .section-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.875rem; /* 30px */
-    line-height: 2.25rem; /* 36px */
-    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+    font-weight: 800;
   }
   .prose {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
+    font-size: 1.125rem;
+    line-height: 1.75;
+    text-align: left;
     color: var(--muted-foreground);
   }
-  .prose p {
-    margin-bottom: 1em;
+  .prose ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .prose li {
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .prose li::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+  }
+  .prose strong {
+    color: var(--foreground);
+    font-weight: 600;
   }
 </style> 
