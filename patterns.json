@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "atomic-design",
+    "name": "Atomic Design",
+    "description": "A methodology for creating robust and scalable design systems by composing simple elements into larger structures.",
+    "icon": "atom"
+  },
+  {
+    "slug": "islands-architecture",
+    "name": "Islands Architecture",
+    "description": "A pattern for building fast websites by reducing the amount of JavaScript shipped to the client, while still allowing for interactive components.",
+    "icon": "sailboat"
+  },
+  {
+    "slug": "state-machines",
+    "name": "State Machines",
+    "description": "A mathematical model of computation used to design and implement complex user interfaces and logic.",
+    "icon": "workflow"
+  }
+] 
