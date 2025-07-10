@@ -34,7 +34,24 @@ const pageTitle = frontmatter.title ? `${frontmatter.title} | ${baseTitle}` : ba
           </div>
         </div>
       </div>
+      <div id="sidebar-overlay" class="fixed inset-0 z-30 bg-black/50 hidden"></div>
       <Footer />
     </div>
 	</body>
-</html> 
+</html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    const toggleSidebar = () => {
+      sidebar.classList.toggle('is-open');
+      overlay.classList.toggle('hidden');
+    };
+
+    mobileMenuButton.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+  });
+</script> 

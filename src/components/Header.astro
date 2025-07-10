@@ -1,16 +1,25 @@
 ---
-import { BookMarked } from 'lucide-astro';
+import { BookMarked, Menu } from 'lucide-astro';
 ---
 
-<header class="header">
-  <div class="header-container">
-    <div class="logo">
-      <a href="/">
+<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="container flex h-14 items-center">
+    <div class="mr-4 hidden md:flex">
+      <a class="mr-6 flex items-center space-x-2" href="/">
         <BookMarked class="h-6 w-6" />
-        <span class="logo-text">O Guia do Arquiteto Front-end</span>
+        <span class="hidden font-bold sm:inline-block">O Guia do Arquiteto Front-end</span>
       </a>
     </div>
+
+    <button id="mobile-menu-button" class="inline-flex items-center justify-center rounded-md p-2 text-primary md:hidden">
+      <Menu class="h-6 w-6" />
+      <span class="sr-only">Abrir Menu</span>
+    </button>
   </div>
 </header>
-  <div class="flex items-center gap-4">
-// ... (resto do conteúdo) 
+<style>
+  .container {
+    max-width: 86%;
+    margin: 0 auto;
+  }
+</style> 
