@@ -6,31 +6,6 @@ import { Sun, Moon } from 'lucide-astro';
   <Moon class="icon moon" />
 </button>
 
-<style>
-  .theme-toggle {
-    background-color: transparent;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .theme-toggle:hover {
-    background-color: var(--accent);
-  }
-  .icon {
-    width: 1.2rem;
-    height: 1.2rem;
-  }
-  .dark .sun {
-    display: none;
-  }
-  .light .moon {
-    display: none;
-  }
-</style>
 
 <script>
   document.addEventListener('astro:page-load', () => {
