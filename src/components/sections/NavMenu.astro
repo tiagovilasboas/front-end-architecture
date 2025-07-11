@@ -1,5 +1,6 @@
 ---
 // src/components/sections/NavMenu.astro
+import { Folder, Layers, Book } from 'lucide-astro';
 export interface Props {
   patternsByCategory: Record<string, any[]>;
   currentPath: string;
@@ -9,28 +10,41 @@ const { patternsByCategory, currentPath } = Astro.props;
 ---
 <nav class="flex-grow overflow-y-auto">
   <ul class="menu p-0">
-    <li class="menu-title">Guias de Decisão</li>
-    <li class="nav-item" data-name="como escolher sua arquitetura guia" data-keywords="guias decisão arquitetura escolher">
-      <a href="/guides/how-to-choose/" class:list={{ active: currentPath.startsWith('/guides/') }}>
-        Como Escolher...
-      </a>
+    <!-- Guias -->
+    <li>
+      <details open class="collapse collapse-arrow">
+        <summary class="collapse-title font-medium flex items-center gap-2"><Book size={16}/> Guias de Decisão</summary>
+        <ul class="collapse-content pl-4">
+          <li class="nav-item" data-name="como escolher sua arquitetura guia" data-keywords="guias decisão arquitetura escolher">
+            <a href="/guides/how-to-choose/" class:list={{ active: currentPath.startsWith('/guides/') }}>
+              Como Escolher...
+            </a>
+          </li>
+        </ul>
+      </details>
     </li>
 
     {Object.entries(patternsByCategory).map(([category, patterns]) => (
-      <>
-        <li class="menu-title">{category}</li>
-        {patterns.map(pattern => {
-          const href = `/patterns/${pattern.slug}/`;
-          const isActive = currentPath === href;
-          return (
-            <li class="nav-item" data-name={pattern.data.title.toLowerCase()} data-keywords={pattern.slug}>
-              <a href={href} class:list={{ active: isActive }}>
-                {pattern.data.title}
-              </a>
-            </li>
-          );
-        })}
-      </>
+      <li>
+        <details class="collapse collapse-arrow">
+          <summary class="collapse-title font-medium flex items-center gap-2">
+            <Layers size={16}/> {category}
+          </summary>
+          <ul class="collapse-content pl-4">
+            {patterns.map(pattern => {
+              const href = `/patterns/${pattern.slug}/`;
+              const isActive = currentPath === href;
+              return (
+                <li class="nav-item" data-name={pattern.data.title.toLowerCase()} data-keywords={pattern.slug}>
+                  <a href={href} class:list={{ active: isActive }}>
+                    {pattern.data.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      </li>
     ))}
   </ul>
 </nav>
