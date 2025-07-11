@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { Search } from 'lucide-astro';
+import NavMenu from './NavMenu.astro';
 
 const allPatterns = await getCollection('patterns');
 
@@ -25,38 +26,7 @@ const currentPath = new URL(Astro.request.url).pathname;
       <Search class="search-icon" size={18} />
       <input type="text" id="sidebar-search" placeholder="Buscar padrões..." />
     </div>
-    <nav class="nav-links">
-      <ul>
-        <li class="category-group">
-          <p class="category-title">Guias de Decisão</p>
-          <ul>
-            <li class="nav-item" data-name="como escolher sua arquitetura guia" data-keywords="guias decisão arquitetura escolher">
-              <a href="/guides/how-to-choose/" class:list={{ active: currentPath.startsWith('/guides/') }}>
-                Como Escolher...
-              </a>
-            </li>
-          </ul>
-        </li>
-        {Object.entries(patternsByCategory).map(([category, patterns]) => (
-          <li class="category-group">
-            <p class="category-title">{category}</p>
-            <ul>
-              {patterns.map(pattern => {
-                const href = `/patterns/${pattern.slug}/`;
-                const isActive = currentPath === href;
-                return (
-                  <li class="nav-item" data-name={pattern.data.title.toLowerCase()} data-keywords={pattern.slug}>
-                    <a href={href} class:list={{ active: isActive }}>
-                      {pattern.data.title}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <NavMenu patternsByCategory={patternsByCategory} currentPath={currentPath} />
   </div>
 </aside>
 
@@ -119,6 +89,7 @@ const currentPath = new URL(Astro.request.url).pathname;
   .sidebar {
     background-color: var(--secondary);
     border-right: 1px solid var(--border);
+    padding: 12px;
     overflow-y: auto;
   }
 
@@ -132,6 +103,7 @@ const currentPath = new URL(Astro.request.url).pathname;
   .search-wrapper {
     position: relative;
     margin-bottom: 1.5rem;
+    width: 100%;
   }
 
   .search-icon {
@@ -144,6 +116,8 @@ const currentPath = new URL(Astro.request.url).pathname;
 
   #sidebar-search {
     width: 100%;
+    margin: 0;
+    box-sizing: border-box;
     padding: 0.5rem 0.75rem 0.5rem 2.5rem;
     background-color: var(--background);
     border: 1px solid var(--border);
