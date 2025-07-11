@@ -90,7 +90,13 @@ const currentPath = new URL(Astro.request.url).pathname;
     background-color: var(--secondary);
     border-right: 1px solid var(--border);
     padding: 12px;
-    overflow-y: auto;
+  }
+
+  /* Habilita scroll interno apenas em telas desktop */
+  @media (min-width: 1024px) {
+    .sidebar {
+      overflow-y: auto;
+    }
   }
 
   .nav-links {
