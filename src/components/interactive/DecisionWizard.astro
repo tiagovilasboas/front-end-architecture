@@ -14,16 +14,16 @@ const allPatterns = await getCollection('patterns');
         <DynamicIcon name="users" size={20} />
         Qual o tamanho do seu time?
       </h3>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <button class="option-card btn btn-outline" data-filter="teamSize" data-value="small">
+      <div class="segment-control flex flex-wrap gap-2">
+        <button class="segment option-card" data-filter="teamSize" data-value="small">
           <span class="card-title">Pequeno</span>
           <span class="card-desc text-xs opacity-70">(1-5 pessoas)</span>
         </button>
-        <button class="option-card btn btn-outline" data-filter="teamSize" data-value="medium">
+        <button class="segment option-card" data-filter="teamSize" data-value="medium">
           <span class="card-title">Médio</span>
           <span class="card-desc text-xs opacity-70">(6-15 pessoas)</span>
         </button>
-        <button class="option-card btn btn-outline" data-filter="teamSize" data-value="large">
+        <button class="segment option-card" data-filter="teamSize" data-value="large">
           <span class="card-title">Grande</span>
           <span class="card-desc text-xs opacity-70">(+15 / Múltiplos times)</span>
         </button>
@@ -35,16 +35,16 @@ const allPatterns = await getCollection('patterns');
         <DynamicIcon name="puzzle" size={20} />
         Qual a complexidade do produto?
       </h3>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <button class="option-card btn btn-outline" data-filter="complexity" data-value="low">
+      <div class="segment-control flex flex-wrap gap-2">
+        <button class="segment option-card" data-filter="complexity" data-value="low">
           <span class="card-title">Baixa</span>
           <span class="card-desc text-xs opacity-70">(Site de conteúdo, Landing Page)</span>
         </button>
-        <button class="option-card btn btn-outline" data-filter="complexity" data-value="medium">
+        <button class="segment option-card" data-filter="complexity" data-value="medium">
           <span class="card-title">Média</span>
           <span class="card-desc text-xs opacity-70">(Dashboard, App CRUD)</span>
         </button>
-        <button class="option-card btn btn-outline" data-filter="complexity" data-value="high">
+        <button class="segment option-card" data-filter="complexity" data-value="high">
           <span class="card-title">Alta</span>
           <span class="card-desc text-xs opacity-70">(Editor, Super App)</span>
         </button>
@@ -136,12 +136,12 @@ const allPatterns = await getCollection('patterns');
       const value = button.dataset.value;
       
       const parent = button.parentElement;
-      parent.querySelectorAll('.option-card').forEach(btn => btn.classList.remove('btn-primary'));
+      parent.querySelectorAll('.option-card').forEach(btn => btn.classList.remove('segment-selected'));
       
       if (filters[filter] === value) {
         filters[filter] = null; // Desselecionar
       } else {
-        button.classList.add('btn-primary');
+        button.classList.add('segment-selected');
         filters[filter] = value;
       }
       

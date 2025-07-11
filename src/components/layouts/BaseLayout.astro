@@ -36,6 +36,18 @@ const propsForSeo = { ...rest, ...frontmatter };
       } else {
         document.documentElement.classList.add('dark');
       }
+
+      // atalhos: / foca busca; Esc fecha drawer
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.target.matches('input, textarea')) {
+          e.preventDefault();
+          document.getElementById('sidebar-search')?.focus();
+        }
+        if (e.key === 'Escape') {
+          const cb = document.getElementById('sidebar-toggle');
+          if (cb?.checked) cb.checked = false;
+        }
+      });
     </script>
 	</head>
 	<body>
