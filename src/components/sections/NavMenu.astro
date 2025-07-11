@@ -1,0 +1,89 @@
+---
+// src/components/sections/NavMenu.astro
+export interface Props {
+  patternsByCategory: Record<string, any[]>;
+  currentPath: string;
+}
+
+const { patternsByCategory, currentPath } = Astro.props;
+---
+<nav class="nav-links">
+  <ul>
+    <li class="category-group">
+      <p class="category-title">Guias de Decisão</p>
+      <ul>
+        <li class="nav-item" data-name="como escolher sua arquitetura guia" data-keywords="guias decisão arquitetura escolher">
+          <a href="/guides/how-to-choose/" class:list={{ active: currentPath.startsWith('/guides/') }}>
+            Como Escolher...
+          </a>
+        </li>
+      </ul>
+    </li>
+    {Object.entries(patternsByCategory).map(([category, patterns]) => (
+      <li class="category-group">
+        <p class="category-title">{category}</p>
+        <ul>
+          {patterns.map(pattern => {
+            const href = `/patterns/${pattern.slug}/`;
+            const isActive = currentPath === href;
+            return (
+              <li class="nav-item" data-name={pattern.data.title.toLowerCase()} data-keywords={pattern.slug}>
+                <a href={href} class:list={{ active: isActive }}>
+                  {pattern.data.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .nav-links {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-right: -1.5rem; /* Compensa o padding do pai para a scrollbar */
+    padding-right: 1.5rem;
+  }
+  
+  .nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .category-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .category-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.5rem 0.5rem;
+  }
+  
+  .nav-item a {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    font-size: 0.9rem;
+  }
+
+  .nav-item a:hover {
+    background-color: var(--accent);
+  }
+
+  .nav-item a.active {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 500;
+  }
+</style> 
