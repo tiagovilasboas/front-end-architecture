@@ -10,13 +10,15 @@ interface Props {
 const { pattern } = Astro.props;
 const { title, description, icon } = pattern.data;
 ---
-<a href=`/patterns/${pattern.slug}/` class="pattern-card">
-  <div class="card-icon">
-    <DynamicIcon name={icon} size={24} />
-  </div>
-  <div class="card-content">
-    <h4 class="card-title">{title}</h4>
-    <p class="card-description">{description}</p>
+<a href=`/patterns/${pattern.slug}/` class="card bg-base-100 shadow-md hover:shadow-lg transition">
+  <div class="card-body flex gap-4 items-start">
+    <div class="bg-base-200 rounded-box p-3">
+      <DynamicIcon name={icon} size={24} />
+    </div>
+    <div>
+      <h4 class="card-title">{title}</h4>
+      <p class="text-sm opacity-80">{description}</p>
+    </div>
   </div>
 </a>
 

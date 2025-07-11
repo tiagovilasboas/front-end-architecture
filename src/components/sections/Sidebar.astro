@@ -20,12 +20,12 @@ const patternsByCategory = allPatterns.reduce((acc, pattern) => {
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
-<aside id="sidebar" class="sidebar">
-  <div class="p-6 h-full flex flex-col">
-    <div class="search-wrapper">
-      <Search class="search-icon" size={18} />
-      <input type="text" id="sidebar-search" placeholder="Buscar padrões..." />
-    </div>
+<aside id="sidebar" class="w-72 bg-base-200 border-r hidden md:block">
+  <div class="p-4 h-full flex flex-col gap-4">
+    <label class="relative">
+      <Search class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60" size={18} />
+      <input type="text" id="sidebar-search" placeholder="Buscar padrões..." class="input input-bordered w-full pl-10" />
+    </label>
     <NavMenu patternsByCategory={patternsByCategory} currentPath={currentPath} />
   </div>
 </aside>
