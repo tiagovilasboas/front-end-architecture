@@ -1,23 +1,13 @@
 ---
 import BaseLayout from '../components/layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
 import AboutAuthor from '../components/sections/AboutAuthor.astro';
+import PatternsCarousel from '../components/sections/PatternsCarousel.astro';
 ---
 <BaseLayout>
-  <div class="space-y-12">
-    <header class="page-header">
-      <h1 class="title">O Guia (Realista) para Arquitetura Front-end</h1>
-      <p class="subtitle">
-        Uma coleção de padrões e práticas, de dev pra dev, sem papas na língua. O objetivo é te ajudar a fazer as perguntas certas e tomar decisões melhores no seu próximo projeto.
-      </p>
-    </header>
-
-    <section class="prose dark:prose-invert max-w-none">
-      <h2>Por que este Guia?</h2>
-      <p>A internet está cheia de artigos que dizem "use a arquitetura X porque é a melhor". Mas "melhor" pra quem? Pro Google? Pra um time de 300 pessoas na gringa? E pra você? Pro seu time de 3 pessoas com um prazo apertado?</p>
-      <p>Criei este guia por causa disso. Isso não é um manual de regras. Pense nisso como uma conversa, um guia de bolso com a opinião de quem já quebrou a cabeça com tudo isso. Meu objetivo não é te dar uma resposta definitiva, mas sim te ajudar a fazer as <strong>perguntas certas</strong> para o seu contexto.</p>
-      <p>Vamos analisar os padrões de arquitetura mais populares, sem papas na língua. Vou te mostrar não só o <em>o quê</em>, mas o <em>porquê</em> — e, mais importante, o <em>quando</em> e o <em>quando não</em>. Então, bora parar de rodar em círculos e mergulhar nas opções que temos na mesa.</p>
-    </section>
-    
+  <div class="space-y-16">
+    <Hero />
+    <PatternsCarousel />
     <AboutAuthor />
   </div>
 </BaseLayout>

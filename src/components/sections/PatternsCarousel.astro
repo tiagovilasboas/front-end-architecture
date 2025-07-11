@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import PatternCard from '../interactive/PatternCard.astro';
+const patterns = await getCollection('patterns');
+---
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">Padrões em destaque</h2>
+  <div class="flex gap-4 overflow-x-auto py-2" style="scrollbar-width:none;">
+    {patterns.map(p => (
+      <div class="min-w-[280px] flex-shrink-0">
+        <PatternCard pattern={p} />
+      </div>
+    ))}
+  </div>
+</section> 
