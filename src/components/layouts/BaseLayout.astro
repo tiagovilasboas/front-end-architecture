@@ -4,12 +4,13 @@ import ThemeToggle from '../ui/ThemeToggle.astro';
 import Seo from '../utils/Seo.astro';
 import Sidebar from '../sections/Sidebar.astro';
 import { ViewTransitions } from 'astro:transitions';
+import '../../styles/global.css';
 import { SITE_CONFIG } from '../../config';
 
 const { frontmatter = {}, ...rest } = Astro.props;
 const propsForSeo = { ...rest, ...frontmatter };
 ---
-<html lang="en">
+<html lang="en" data-theme="cerberus">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
