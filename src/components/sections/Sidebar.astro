@@ -20,7 +20,7 @@ const patternsByCategory = allPatterns.reduce((acc, pattern) => {
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
-<aside id="sidebar" class="w-72 bg-base-200 border-r hidden md:block">
+<aside class="w-72 bg-base-200 border-r h-full">
   <div class="p-4 h-full flex flex-col gap-4">
     <label class="relative">
       <Search class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60" size={18} />

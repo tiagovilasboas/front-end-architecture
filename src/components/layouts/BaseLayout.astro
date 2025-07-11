@@ -39,12 +39,14 @@ const propsForSeo = { ...rest, ...frontmatter };
     </script>
 	</head>
 	<body>
-    <div id="app-shell" class="app-shell">
-      <header class="app-bar bg-base-100 border-b">
-        <div class="app-bar-start">
-          <button id="menu-toggle" class="btn btn-square btn-ghost md:hidden" aria-label="Abrir menu">
-            <Menu size={24} />
-          </button>
+    <div class="drawer min-h-screen">
+      <input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content flex flex-col">
+        <header class="app-bar bg-base-100 border-b">
+          <div class="app-bar-start">
+            <label for="sidebar-toggle" class="btn btn-square btn-ghost md:hidden" aria-label="Abrir menu">
+              <Menu size={24} />
+            </label>
           <a href="/" class="btn btn-ghost gap-2 text-xl">
             <Rocket size={24} />
             <span class="hidden sm:inline">Front-end Architecture Reference</span>
@@ -53,37 +55,17 @@ const propsForSeo = { ...rest, ...frontmatter };
         <div class="app-bar-end">
           <ThemeToggle />
         </div>
-      </header>
+        </header>
 
-      <Sidebar />
-
-      <main class="main-content">
-        <slot />
-      </main>
-      
-      <div id="sidebar-overlay" class="sidebar-overlay"></div>
+        <main class="p-6 md:p-10 flex-1">
+          <slot />
+        </main>
+      </div>
+      <div class="drawer-side">
+        <label for="sidebar-toggle" class="drawer-overlay"></label>
+        <Sidebar />
+      </div>
     </div>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const menuToggle = document.getElementById('menu-toggle');
-        const overlay = document.getElementById('sidebar-overlay');
-        const appShell = document.getElementById('app-shell');
-
-        const toggleSidebar = () => {
-          appShell.classList.toggle('sidebar-open');
-        };
-
-        menuToggle.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-        
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && appShell.classList.contains('sidebar-open')) {
-            toggleSidebar();
-          }
-        });
-      });
-    </script>
 	</body>
 </html>
 
