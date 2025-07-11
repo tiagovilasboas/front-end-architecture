@@ -7,54 +7,52 @@ import PatternCard from './PatternCard.astro';
 const allPatterns = await getCollection('patterns');
 ---
 
-<div class="wizard-container">
-  <div class="filters-grid">
-    <!-- Filtro 1: Tamanho do Time -->
-    <div class="filter-group">
-      <h3 class="filter-title">
+<div class="container mx-auto flex flex-col gap-8">
+  <div class="grid gap-8 md:grid-cols-2">
+    <div class="space-y-4">
+      <h3 class="flex items-center gap-2 text-lg font-semibold">
         <DynamicIcon name="users" size={20} />
         Qual o tamanho do seu time?
       </h3>
-      <div class="card-options">
-        <button class="option-card" data-filter="teamSize" data-value="small">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <button class="option-card btn btn-outline" data-filter="teamSize" data-value="small">
           <span class="card-title">Pequeno</span>
-          <span class="card-desc">(1-5 pessoas)</span>
+          <span class="card-desc text-xs opacity-70">(1-5 pessoas)</span>
         </button>
-        <button class="option-card" data-filter="teamSize" data-value="medium">
+        <button class="option-card btn btn-outline" data-filter="teamSize" data-value="medium">
           <span class="card-title">Médio</span>
-          <span class="card-desc">(6-15 pessoas)</span>
+          <span class="card-desc text-xs opacity-70">(6-15 pessoas)</span>
         </button>
-        <button class="option-card" data-filter="teamSize" data-value="large">
+        <button class="option-card btn btn-outline" data-filter="teamSize" data-value="large">
           <span class="card-title">Grande</span>
-          <span class="card-desc">(+15 / Múltiplos times)</span>
+          <span class="card-desc text-xs opacity-70">(+15 / Múltiplos times)</span>
         </button>
       </div>
     </div>
 
-    <!-- Filtro 2: Complexidade do Produto -->
-    <div class="filter-group">
-      <h3 class="filter-title">
+    <div class="space-y-4">
+      <h3 class="flex items-center gap-2 text-lg font-semibold">
         <DynamicIcon name="puzzle" size={20} />
         Qual a complexidade do produto?
       </h3>
-      <div class="card-options">
-        <button class="option-card" data-filter="complexity" data-value="low">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <button class="option-card btn btn-outline" data-filter="complexity" data-value="low">
           <span class="card-title">Baixa</span>
-          <span class="card-desc">(Site de conteúdo, Landing Page)</span>
+          <span class="card-desc text-xs opacity-70">(Site de conteúdo, Landing Page)</span>
         </button>
-        <button class="option-card" data-filter="complexity" data-value="medium">
+        <button class="option-card btn btn-outline" data-filter="complexity" data-value="medium">
           <span class="card-title">Média</span>
-          <span class="card-desc">(Dashboard, App CRUD)</span>
+          <span class="card-desc text-xs opacity-70">(Dashboard, App CRUD)</span>
         </button>
-        <button class="option-card" data-filter="complexity" data-value="high">
+        <button class="option-card btn btn-outline" data-filter="complexity" data-value="high">
           <span class="card-title">Alta</span>
-          <span class="card-desc">(Editor, Super App)</span>
+          <span class="card-desc text-xs opacity-70">(Editor, Super App)</span>
         </button>
       </div>
     </div>
   </div>
 
-  <div class="results-grid">
+  <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3" id="results-grid">
     {allPatterns.map(pattern => (
       <div id={pattern.slug} class="pattern-wrapper">
         <PatternCard {pattern} />
@@ -84,7 +82,7 @@ const allPatterns = await getCollection('patterns');
 
   const filterButtons = document.querySelectorAll('.option-card');
   const patternWrappers = document.querySelectorAll('.pattern-wrapper');
-  const resultsGrid = document.querySelector('.results-grid');
+  const resultsGrid = document.getElementById('results-grid');
 
   function updateResults() {
     const scores = {};
@@ -138,12 +136,12 @@ const allPatterns = await getCollection('patterns');
       const value = button.dataset.value;
       
       const parent = button.parentElement;
-      parent.querySelectorAll('.option-card').forEach(btn => btn.classList.remove('selected'));
+      parent.querySelectorAll('.option-card').forEach(btn => btn.classList.remove('btn-primary'));
       
       if (filters[filter] === value) {
         filters[filter] = null; // Desselecionar
       } else {
-        button.classList.add('selected');
+        button.classList.add('btn-primary');
         filters[filter] = value;
       }
       
