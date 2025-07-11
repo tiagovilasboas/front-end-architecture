@@ -52,17 +52,21 @@ const propsForSeo = { ...rest, ...frontmatter };
 	</head>
 	<body>
     <div class="drawer min-h-screen">
-      <input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
+      <input id="sidebar-toggle" type="checkbox" class="drawer-toggle md:drawer-open" />
       <div class="drawer-content flex flex-col">
         <AppBar />
 
-        <main class="p-6 md:p-10 flex-1">
-          <slot />
+        <main class="flex-1">
+          <div class="container mx-auto px-4 lg:px-8 py-10 space-y-16">
+            <slot />
+          </div>
         </main>
       </div>
       <div class="drawer-side">
         <label for="sidebar-toggle" class="drawer-overlay"></label>
-        <Sidebar />
+        <aside class="w-64 h-full bg-base-200 border-r overflow-y-auto">
+          <Sidebar />
+        </aside>
       </div>
     </div>
 	</body>
