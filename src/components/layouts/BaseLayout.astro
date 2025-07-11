@@ -1,6 +1,6 @@
 ---
 import { Rocket, Menu } from 'lucide-astro';
-import ThemeToggle from '../ui/ThemeToggle.astro';
+import AppBar from '../ui/AppBar.astro';
 import Seo from '../utils/Seo.astro';
 import Sidebar from '../sections/Sidebar.astro';
 import { ViewTransitions } from 'astro:transitions';
@@ -42,20 +42,7 @@ const propsForSeo = { ...rest, ...frontmatter };
     <div class="drawer min-h-screen">
       <input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content flex flex-col">
-        <header class="app-bar bg-base-100 border-b">
-          <div class="app-bar-start">
-            <label for="sidebar-toggle" class="btn btn-square btn-ghost md:hidden" aria-label="Abrir menu">
-              <Menu size={24} />
-            </label>
-          <a href="/" class="btn btn-ghost gap-2 text-xl">
-            <Rocket size={24} />
-            <span class="hidden sm:inline">Front-end Architecture Reference</span>
-          </a>
-        </div>
-        <div class="app-bar-end">
-          <ThemeToggle />
-        </div>
-        </header>
+        <AppBar />
 
         <main class="p-6 md:p-10 flex-1">
           <slot />

@@ -1,0 +1,22 @@
+---
+import { Rocket, Menu, Github } from 'lucide-astro';
+import ThemeToggle from './ThemeToggle.astro';
+---
+<header class="app-bar bg-base-100 border-b">
+  <div class="app-bar-start">
+    <!-- Drawer toggle only visible on mobile -->
+    <label for="sidebar-toggle" class="btn btn-square btn-ghost md:hidden" aria-label="Abrir menu">
+      <Menu size={24} />
+    </label>
+    <a href="/" class="btn btn-ghost gap-2 text-xl">
+      <Rocket size={24} />
+      <span class="hidden sm:inline">Front-end Architecture Reference</span>
+    </a>
+  </div>
+  <div class="app-bar-end gap-2">
+    <a href="https://github.com/tiagovilasboas/front-end-architecture" class="btn btn-square btn-ghost" aria-label="GitHub" target="_blank">
+      <Github size={20} />
+    </a>
+    <ThemeToggle />
+  </div>
+</header> 
