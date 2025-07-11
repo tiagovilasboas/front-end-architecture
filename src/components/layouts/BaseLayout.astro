@@ -51,7 +51,7 @@ const propsForSeo = { ...rest, ...frontmatter };
     </script>
 	</head>
 	<body>
-    <div class="drawer min-h-screen">
+    <div class="drawer drawer-mobile min-h-screen">
       <input id="sidebar-toggle" type="checkbox" class="drawer-toggle md:drawer-open" />
       <div class="drawer-content flex flex-col">
         <AppBar />
@@ -64,7 +64,7 @@ const propsForSeo = { ...rest, ...frontmatter };
       </div>
       <div class="drawer-side">
         <label for="sidebar-toggle" class="drawer-overlay"></label>
-        <aside class="w-64 h-full bg-base-200 border-r overflow-y-auto">
+        <aside class="w-64 h-full bg-base-200 border-r overflow-y-auto md:sticky md:top-0">
           <Sidebar />
         </aside>
       </div>
